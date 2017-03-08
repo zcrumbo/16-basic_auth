@@ -104,6 +104,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+.DS_Store
 
 ### Windows ###
 # Windows thumbnail cache files

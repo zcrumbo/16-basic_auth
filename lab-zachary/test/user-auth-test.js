@@ -119,4 +119,3 @@ describe('User Auth tests', function() {
     });
   });
 });
-

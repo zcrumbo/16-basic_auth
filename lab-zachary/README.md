@@ -1,6 +1,6 @@
-# Basic Auth with an Express API
+# Basic and Bearer Auth with an Express API
 
-This app implements Basic Auth with API endpoints to allow for user signup and sign in.
+This app implements Basic and Bearer Auth with API endpoints to allow for user signup and sign in, and to create, read, update and delete galleries associated with that user.
 
 # System Requirements
 
@@ -41,23 +41,32 @@ npm start
 
 ### Connecting
 
-If you are using HTTPie, in your terminal window, type the following commands, where '3000' would be replaced with your local environment PORT variable, if configured. Commands can  be sent to the api/signin and the api/signup endpoints.
+Commands can  be sent to the api/signin and the api/signup endpoints. Once signed up, commands can be sent with the token generated during signup to api/gallery and api/gallery/:id endpoints for full CRUD functionality
 
 
 ```sh
-$  http POST localhost:3000/api/signup/ username='testname' password='password' email='email@email.com'  #signs up for the api and returns a unqique token that must be used in future api calls
+$  POST /api/signup/ with JSON body {username='testname' password='password' email='email@email.com'}  #signs up for the api and returns a unqique token that must be used in future api calls
 
-$ http GET -a username:password localhost:3000/api/signin #signs into the API
+$ GET   /api/signin with basic auth header username:password #signs into the API
+
+$ POST /api/gallery with token #creates a new gallery
+
+$ GET /api/gallery/:galleryID with token #retrieve your gallery
+
+$ PUT /api/gallery/:galleryID with token and JSON body {name:'galleryName', desc: 'description'} #updates specified gallery
+
+$ DELETE /api/gallery/:galleryID with token #deletes specified gallery
 
 ```
 
 Sending the following requests to the server will have the results below:
 
- * `GET, POST`:  404 response with 'not found' for unregistered endpoints
-* `GET`: 401 response with a bad credentials
- * `GET`: 200 response with a proper signin
- * `POST`: 400 response with 'bad request' if no request body was provided or the body was invalid
- * `POST`: 200 response with the body content for a post request with a valid body
+ * `404` response with 'not found' for unregistered endpoints and nonexistent gallery IDs
+ * `401` response with 'unauthorized' for bad credentials
+ * `200` response with a proper signin and gallery creation
+ * `400` response with 'bad request' if no request body was provided or the body was invalid
+ * `200` response with the body content for requests with valid bodies, endpoints and ids
+ * `204` response for successful deletions
 
 
 [1]:https://brew.sh/

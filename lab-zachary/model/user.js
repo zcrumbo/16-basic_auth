@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const crypto = require('crypto');
-const debug = require('debug')('cf-gram:user');
+const debug = require('debug')('cfgram:user');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 const jwt = require('jsonwebtoken');
