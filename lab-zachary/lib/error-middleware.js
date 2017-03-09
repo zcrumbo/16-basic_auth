@@ -18,6 +18,7 @@ module.exports = function(err, req, res, next){
   }
 
   if (err.message === 'ValidationError'){
+    debug('Mongoose Error');
     err = createError(400, err.message);
     res.status(err.status).send(err.message);
     next();

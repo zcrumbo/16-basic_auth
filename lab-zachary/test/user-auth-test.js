@@ -6,7 +6,8 @@ const User = require('../model/user.js');
 
 const url = `localhost:${process.env.PORT}`;
 
-require('../server.js');
+const serverToggle = require('./lib/server-toggle.js');
+const server = require('../server.js');
 
 const sampleUser = {
   username: 'testUser',
@@ -15,6 +16,8 @@ const sampleUser = {
 };
 
 describe('User Auth tests', function() {
+  before( done => serverToggle.serverOn(server, done));
+  after(done => serverToggle.serverOff(server, done));
   describe('POST: /api/signup', function() {
     describe('with a valid body', function() {
       after( done => {
