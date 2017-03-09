@@ -15,5 +15,6 @@
   sudo: required
   before_script: npm i
   script:
+    - cd lab-zachary
     - npm test
     - npm run lint
