@@ -4,6 +4,7 @@ const fs = require('fs');
 const request = require('superagent');
 const expect = require('chai').expect;
 const Promise = require('bluebird');
+const del = require('del');
 
 const Pic = require('../model/pic.js');
 const User = require('../model/user.js');
@@ -36,7 +37,8 @@ describe('Pic Routes', function() {
     Promise.all([
       User.remove({}),
       Gallery.remove({}),
-      Pic.remove({})
+      Pic.remove({}),
+      del([`${__dirname}/../data/*`])
     ])
     .then( () => done())
     .catch(done);

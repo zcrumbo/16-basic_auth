@@ -5,7 +5,8 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "DEBUG='cfgram*' mocha",
-    "start": "DEBUG='cfgram*' nodemon server.js"
+    "start": "DEBUG='cfgram*' nodemon server.js",
+    "lint": "gulp lint"
   },
   "keywords": [],
   "author": "",
