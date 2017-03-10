@@ -28,6 +28,5 @@ app.use(errors);
 
 
 
-const server = module.exports = app.listen(PORT, () => debug('server up:', PORT));
+app.listen(PORT, () => debug('server up:', PORT));
 
-server.isRunning = true;

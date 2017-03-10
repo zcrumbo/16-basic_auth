@@ -10,8 +10,10 @@ const Pic = require('../model/pic.js');
 const User = require('../model/user.js');
 const Gallery = require('../model/gallery.js');
 
-const serverToggle = require('./lib/server-toggle.js');
-const server = require('../server.js');
+// const serverToggle = require('./lib/server-toggle.js');
+// const server = require('../server.js');
+require('../server.js');
+
 const s3Methods = require('../lib/s3-methods.js');
 
 const url = `http://localhost:${process.env.PORT}`;
@@ -31,8 +33,8 @@ const samplePic = {
 };
 
 describe('Pic Routes', function() {
-  before( done => serverToggle.serverOn(server, done));
-  after(done => serverToggle.serverOff(server, done));
+  // before( done => serverToggle.serverOn(server, done));
+  // after(done => serverToggle.serverOff(server, done));
   afterEach( done => {
     Promise.all([
       User.remove({}),
