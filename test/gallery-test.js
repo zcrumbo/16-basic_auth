@@ -9,9 +9,9 @@ const Gallery = require('../model/gallery.js');
 
 const url = `http://localhost:${process.env.PORT}`;
 
-// const serverToggle = require('./lib/server-toggle.js');
-// const server = require('../server.js');
-require('../server.js');
+const serverToggle = require('./lib/server-toggle.js');
+const server = require('../server.js');
+
 
 const sampleUser = {
   username: 'sampleUser',
@@ -25,8 +25,8 @@ const sampleGallery = {
 
 
 describe('Gallery Routes', function() {
-  // before( done => serverToggle.serverOn(server, done));
-  // after(done => serverToggle.serverOff(server, done));
+  before( done => serverToggle.serverOn(server, done));
+  after(done => serverToggle.serverOff(server, done));
   afterEach( done => {
     Promise.all([
       User.remove({}),
