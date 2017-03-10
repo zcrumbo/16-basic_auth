@@ -1,59 +1,73 @@
-![cf](https://i.imgur.com/7v5ASc8.png) Lab 16 - Basic Auth
-======
+# Basic and Bearer Auth with an Express API
 
-## To Submit this Assignment
-  * fork this repository
-  * write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-brian`
-  * push to your repository
-  * submit a pull request to this repository
-  * submit a link to your PR in canvas
-  * write a question and observation on canvas
+This app implements Basic and Bearer Auth with API endpoints to allow for user signup and sign in, and to create, read, update and delete galleries associated with that user.
 
-## Include
-  * `package.json`
-  * `.eslintrc`
-  * `gulpfile.js`
-  * `.gitignore`
-  * `.env`
-  * `README.md`
+# System Requirements
 
-## Description
-  * Create the following directories to organize your code:
-    * **lib**
-    * **model**
-    * **route**
-    * **test**
-  * Create an HTTP server using `express`
-  * Using `mongoose`, create a **User** model with the following properties and options:
-    * `username` - *required and unique*
-    * `email` - *required and unique*
-    * `password` - *required - this must be hashed and can not stored as plain text*
-    * `findHash` - *unique*
-  * Use the **npm** `debug` module to log function calls that are used within your application
-  * Use the **express** `Router` to create a custom router for allowing users to **sign up** and **sign in**
-  * Use the **npm** `dotenv` module to house the following environment variables:
-    * `PORT`
-    * `MONGODB_URI`
-    * `APP_SECRET` *(used for signing and verify tokens)*
+  - Terminal.app on macOS or equivalent
+  - node.js and npm package manager installed
 
-## Server Endpoints
-### `/api/signup`
-* `POST` request
-  * the client should pass the username and password in the body of the request
-  * the server should respond with a token (generated using `jwt` and `findHash`
-  * the server should respond with **400 Bad Request** to a failed request
 
-### `/api/signin`
-* `GET` request
-  * the client should pass the username and password to the server using a `Basic:` authorization header
-  * the server should respond with a token for authenticated users
-  * the server should respond with **401 Unauthorized** for non-authenticated users
+### Installation
 
-## Tests
-* Create a test that will ensure that your API returns a status code of **404** for any routes that have not been registered
-* `/api/signup`
-  * `POST` - test **400**, if no request body has been provided or the body is invalid
-  * `POST` - test **200**, if the request body has been provided and is valid
-* `/api/signin`
- * `GET` - test **401**, if the user could not be authenticated
- * `GET` - test **200**, responds with token for a request with a valid basic authorization header
+Clone the repository to your local server
+```sh
+https://github.com/zcrumbo/16-basic_auth/tree/day-one
+```
+
+Install the dependencies -
+
+```sh
+$ npm i
+```
+
+[HTTPie](https://httpie.org/) will be required to run the HTTP requests from your terminal window. You will need to install this with [Homebrew][1] on macOS. It is also easier to see the results of all operations by running mocha tests with the command
+```sh
+$ mocha
+```
+or use the npm script to run all tests with debug
+```sh
+$ npm test
+```
+Start the server with debug
+
+```sh
+$ npm start
+```
+If you want to use the debug and nodemon modules, run the npm script:
+```
+npm start
+```
+
+### Connecting
+
+Commands can  be sent to the api/signin and the api/signup endpoints. Once signed up, commands can be sent with the token generated during signup to api/gallery and api/gallery/:id endpoints for full CRUD functionality
+
+
+```sh
+$  POST /api/signup/ with JSON body {username='testname' password='password' email='email@email.com'}  #signs up for the api and returns a unqique token that must be used in future api calls
+
+$ GET   /api/signin with basic auth header username:password #signs into the API
+
+$ POST /api/gallery with token #creates a new gallery
+
+$ GET /api/gallery/:galleryID with token #retrieve your gallery
+
+$ PUT /api/gallery/:galleryID with token and JSON body {name:'galleryName', desc: 'description'} #updates specified gallery
+
+$ DELETE /api/gallery/:galleryID with token #deletes specified gallery
+
+```
+
+Sending the following requests to the server will have the results below:
+
+ * `404` response with 'not found' for unregistered endpoints and nonexistent gallery IDs
+ * `401` response with 'unauthorized' for bad credentials
+ * `200` response with a proper signin and gallery creation
+ * `400` response with 'bad request' if no request body was provided or the body was invalid
+ * `200` response with the body content for requests with valid bodies, endpoints and ids
+ * `204` response for successful deletions
+
+
+[1]:https://brew.sh/
+

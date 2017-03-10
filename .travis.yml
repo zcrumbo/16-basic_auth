@@ -13,8 +13,7 @@
   env:
     - CXX=g++-4.8
   sudo: required
-  before_script: 
-    - cd lab-zachary
+  before_script:
     - npm i
   script:
     - npm test
